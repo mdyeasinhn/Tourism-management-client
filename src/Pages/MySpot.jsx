@@ -41,11 +41,11 @@ const MySpot = () => {
 
                         </div>
                         <div className="card-body">
-                            {/* <h2 className="card-title">Name : {spot.name}!</h2>
+                            <h2 className="card-title">Name : {spot.name}!</h2>
                             <p>Details :{spot.details}</p>
                             <p> Travel Time : {spot.travel}</p>
                             <p>Visitor per Year : {spot.visitor}</p>
-                            <p>Price : {spot.price}</p> */}
+                            <p>Price : {spot.price}</p>
 
                         </div>
                         <div className="space-y-14 mr-4">
