@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProviders";
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaGithub } from 'react-icons/fa';
+import googleLogo from '../assets/google.png'
 const Login = () => {
     const { login, googleLogin, githubLogin } = useContext(AuthContext);
     const [error, setError] = useState('');
@@ -71,9 +72,11 @@ const Login = () => {
                 </div>
                 <p className="text-center mt-4">Do Not Have An Account ? <Link className="text-blue-600 font-bold" to='/register'>Register</Link></p>
                 <div className="divider"> Or </div>
-                <button onClick={handleGoogleLogin} className="btn bg-orange-600 ">Continue with Google </button>
-                <button onClick={handleGithubLogin} className="btn bg-orange-600 ">Continue with Github </button>
 
+                <div className="ml-14">
+                    <button onClick={handleGoogleLogin} className="btn w-[300px] ml-20"> <img src={googleLogo} alt="" />Continue with Google </button>
+                    <button onClick={handleGithubLogin} className="btn w-[300px] ml-20 mt-2"> <FaGithub className="text-3xl"></FaGithub>Continue with Github </button>
+                </div>
             </form>
         </div>
     );

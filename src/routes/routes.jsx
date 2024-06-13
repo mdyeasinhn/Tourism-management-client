@@ -3,14 +3,19 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "../Pages/Home";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
+import ErrorElement from "../Pages/ErrorElement";
+import AddTouristsSports from "../Pages/AddTouristsSports";
+import Update from "../Pages/Update";
+import MySpot from "../Pages/MySpot";
 
 const router = createBrowserRouter([
     {
       path: "/",
       element: <Root></Root>,
+      errorElement: <ErrorElement></ErrorElement>,
       children:[
         {
-            path: '/home',
+            path: '/',
             element: <Home></Home>
         },
         {
@@ -20,6 +25,19 @@ const router = createBrowserRouter([
         {
             path: '/register',
             element: <Register></Register>
+        },
+       
+        {
+          path: '/addTour',
+          element: <AddTouristsSports></AddTouristsSports>
+        },
+        {
+          path: '/update/:id',
+          element: <Update></Update>
+        },
+        {
+          path: '/mySpot',
+          element: <MySpot></MySpot>
         }
       ]
     },

@@ -4,31 +4,42 @@ import { AuthContext } from "../Providers/AuthProviders";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Register = () => {
-const {createUser} = useContext(AuthContext);
-const [error, setError] = useState('');
-const [showPassword, setShowPassword] = useState(false);
+    const { createUser } = useContext(AuthContext);
+    const [error, setError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
-    const handleRegister = e =>{
+    const handleRegister = e => {
         e.preventDefault()
         const form = e.target;
         const name = form.name.value;
-        const email= form.email.value;
-        const password= form.password.value;
+        const email = form.email.value;
+        const password = form.password.value;
 
-        const user ={name, email, password};
+        if (password.length < 6){
+            setError("pass")
+            return
+        }else if (!/[A-Z]/.test(password)) {
+            setError("Your password should have at least one upper case characters...");
+            return;
+        }else if (!/[a-z]/.test(password)) {
+            setError("Your password should have at least one  lowercase characters...");
+            return;
+        }
+
+            const user = { name, email, password };
         console.log(user);
         createUser(email, password)
-        .then(res => {
-            console.log(res.user)
-        })
-        .catch(error=>{
-        setError(error.message)
-        })
+            .then(res => {
+                console.log(res.user)
+            })
+            .catch(error => {
+                setError(error.message)
+            })
         setError('')
     }
     return (
         <div >
-            <h2 className="text-3xl text-center mt-4">Please Login</h2>
+            <h2 className="text-3xl text-center mt-4 font-semi-bold">Create an acount</h2>
             <form onSubmit={handleRegister} className="card-body  md:w-3/4 lg:w-1/2 mx-auto ">
                 <div className="form-control">
                     <label className="label">
@@ -48,7 +59,7 @@ const [showPassword, setShowPassword] = useState(false);
                     </label>
                     <input name="email" type="email" placeholder="Email" className="input input-bordered" required />
                 </div>
-                
+
                 <div className="form-control relative">
                     <label className="label">
                         <span className="label-text">Password</span>
