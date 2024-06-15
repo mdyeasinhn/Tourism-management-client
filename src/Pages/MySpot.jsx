@@ -7,7 +7,7 @@ const MySpot = () => {
     const [item, setItem] = useState([]);
     const [control, setControl] = useState(false);
     useEffect(() => {
-        fetch(`http://localhost:5000/mySpot/${user?.email}`)
+        fetch(`https://tourism-management-server-dun.vercel.app/mySpot/${user?.email}`)
             .then(res => res.json())
             .then(data => {
                 setItem(data)
@@ -15,7 +15,7 @@ const MySpot = () => {
     }, [user, control])
 
     const handleDelete = id => {
-        fetch(`http://localhost:5000/delete/${id}`, {
+        fetch(`https://tourism-management-server-dun.vercel.app/delete/${id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())
@@ -37,7 +37,7 @@ const MySpot = () => {
                 item?.map(spot => (
                     <div key={spot._id} className="flex   shadow-xl" >
                         <div className="card card-side bg-base-100">
-                            <figure><img className="w-[500px] " src={spot.image} alt="Movie" /></figure>
+                            <figure><img className="w-[500px] h-[400px]" src={spot.image} alt="Movie" /></figure>
 
                         </div>
                         <div className="card-body">
@@ -69,7 +69,7 @@ export default MySpot;
 
 
 
-// fetch(`http://localhost:5000/delete/${id}`, {
+// fetch(`https://tourism-management-server-dun.vercel.app/delete/${id}`, {
 //     method: 'DELETE'
 // })
 //     .then(res => res.json())

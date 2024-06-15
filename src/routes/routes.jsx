@@ -7,6 +7,7 @@ import ErrorElement from "../Pages/ErrorElement";
 import AddTouristsSports from "../Pages/AddTouristsSports";
 import Update from "../Pages/Update";
 import MySpot from "../Pages/MySpot";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -29,15 +30,15 @@ const router = createBrowserRouter([
        
         {
           path: '/addTour',
-          element: <AddTouristsSports></AddTouristsSports>
+          element: <PrivateRoute><AddTouristsSports></AddTouristsSports></PrivateRoute>
         },
         {
           path: '/update/:id',
-          element: <Update></Update>
+          element: <PrivateRoute><Update></Update></PrivateRoute>
         },
         {
           path: '/mySpot',
-          element: <MySpot></MySpot>
+          element: <PrivateRoute><MySpot></MySpot></PrivateRoute>
         }
       ]
     },

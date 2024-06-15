@@ -2,15 +2,12 @@
 
 const Footer = () => {
     return (
-        <div className="flex justify-around">
-            <div>
-                <h3>Copyright 2021 TourXPro | Design By Egens Lab</h3>
-            </div>
-            <div>
-                <a className="btn btn-ghost text-4xl font-extrabold">Tour <span className="text-orange-600 ">XPro</span></a>
+        <footer className="text-center space-y-2 bg-gray-400 w-full pb-11 mt-10">
+            <h2 className="font-semibold pt-12">Tour X Pro</h2>
+            <h2 className="font-semibold ">Providing reliable Tour X Pro services since 1992</h2>
+            <p >Copyright © 2024 - All right reserved</p>
 
-            </div>
-        </div>
+        </footer>
     );
 };
 
