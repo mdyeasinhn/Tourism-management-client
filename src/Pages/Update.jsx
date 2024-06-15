@@ -36,7 +36,7 @@ const Update = () => {
             headers: {
                 "content-type": "application/json"
             },
-            body: JSON.stringify(info)
+            // body: JSON.stringify(info)
 
         })
         .then(res => res.json())
