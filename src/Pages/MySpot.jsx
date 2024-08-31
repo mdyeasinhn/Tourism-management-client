@@ -7,7 +7,7 @@ const MySpot = () => {
     const [item, setItem] = useState([]);
     const [control, setControl] = useState(false);
     useEffect(() => {
-        fetch(`https://tourism-management-server-dun.vercel.app/mySpot/${user?.email}`)
+        fetch(`http://localhost:5000/mySpot/${user?.email}`)
             .then(res => res.json())
             .then(data => {
                 setItem(data)
@@ -15,7 +15,7 @@ const MySpot = () => {
     }, [user, control])
 
     const handleDelete = id => {
-        fetch(`https://tourism-management-server-dun.vercel.app/delete/${id}`, {
+        fetch(`http://localhost:5000/delete/${id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())
@@ -69,7 +69,7 @@ export default MySpot;
 
 
 
-// fetch(`https://tourism-management-server-dun.vercel.app/delete/${id}`, {
+// fetch(`http://localhost:5000/delete/${id}`, {
 //     method: 'DELETE'
 // })
 //     .then(res => res.json())

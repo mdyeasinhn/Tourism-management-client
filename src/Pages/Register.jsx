@@ -1,90 +1,217 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProviders";
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaGithub } from 'react-icons/fa';
+import { FcGoogle } from 'react-icons/fc'
+import Swal from "sweetalert2";
 
 const Register = () => {
-    const { createUser } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const { createUser, updateUserProfile } = useContext(AuthContext);
     const [error, setError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleRegister = e => {
-        e.preventDefault()
+    const handleRegister = async (e) => {
+        e.preventDefault();
         const form = e.target;
         const name = form.name.value;
         const email = form.email.value;
+        const photo = form.photo.value;
         const password = form.password.value;
 
-        if (password.length < 6){
-            setError("pass")
-            return
-        }else if (!/[A-Z]/.test(password)) {
-            setError("Your password should have at least one upper case characters...");
+        // console.log(name, email, photo, password);
+    
+        // Password validation
+        if (password.length < 6) {
+            setError("Your password must be at least 6 characters long.");
             return;
-        }else if (!/[a-z]/.test(password)) {
-            setError("Your password should have at least one  lowercase characters...");
+        } else if (!/[A-Z]/.test(password)) {
+            setError("Your password should have at least one uppercase character.");
+            return;
+        } else if (!/[a-z]/.test(password)) {
+            setError("Your password should have at least one lowercase character.");
             return;
         }
+    
+        // const user = { name, email, password };
+        // console.log(user);
+    
+        try {
+            //  create a user
+            await createUser(email, password);
 
-            const user = { name, email, password };
-        console.log(user);
-        createUser(email, password)
-            .then(res => {
-                console.log(res.user)
-            })
-            .catch(error => {
-                setError(error.message)
-            })
-        setError('')
+            await updateUserProfile(name, photo);
+            navigate('/')
+            Swal.fire({
+                title: "Registration Successful",
+                text: "You have successfully registered!",
+                icon: "success"
+            });
+        } catch (error) {
+            Swal.fire({
+                title: "Registration Failed",
+                text: error.message,
+                icon: "error"
+            });
+        }
+    };
+    
+    // handle google login
+    const handleGoogleLogin = async () => {
+        try {
+            await googleLogin();
+            Swal.fire({
+                title: "Login Successful",
+                text: "You have successfully logged in!",
+                icon: "success"
+            });
+        } catch (error) {
+            Swal.fire({
+                title: "Login Failed",
+                text: error.message,
+                icon: "error"
+            });
+        }
+    };
+    // handle github login
+    const handleGithubLogin = async () => {
+        try {
+            await githubLogin();
+            navigate('/')
+            Swal.fire({
+                title: "Login Successful",
+                text: "You have successfully logged in!",
+                icon: "success"
+            });
+        } catch (error) {
+            navigate('/')
+            Swal.fire({
+                title: "Login Failed",
+                text: error.message,
+                icon: "error"
+            });
+        }
     }
     return (
-        <div >
-            <h2 className="text-3xl text-center mt-4 font-semi-bold">Create an acount</h2>
-            <form onSubmit={handleRegister} className="card-body  md:w-3/4 lg:w-1/2 mx-auto ">
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">Name</span>
-                    </label>
-                    <input name="name" type="text" placeholder="Your Name" className="input input-bordered" required />
+        <div className='flex justify-center items-center min-h-screen'>
+            <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
+                <div className='mb-8 text-center'>
+                    <h1 className='my-2 text-4xl font-bold'>Registration.</h1>
+                    <p className='text-sm text-gray-400'>
+                    Welcome to TourXPro
+                    </p>
                 </div>
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">Photo URL</span>
-                    </label>
-                    <input name="photo" type="photo" placeholder="Photo URL" className="input input-bordered" required />
-                </div>
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">Email</span>
-                    </label>
-                    <input name="email" type="email" placeholder="Email" className="input input-bordered" required />
-                </div>
-
-                <div className="form-control relative">
-                    <label className="label">
-                        <span className="label-text">Password</span>
-                    </label>
-                    <input name="password" type={showPassword ? "text" : "password"} placeholder="Password" className="input input-bordered" required />
-                    <span className="absolute top-12 right-2" onClick={() => setShowPassword(!showPassword)}>
+                <form
+                    onSubmit={handleRegister}
+                    className='space-y-6 ng-untouched ng-pristine ng-valid'
+                >
+                    <div className='space-y-4'>
+                        <div>
+                            <label htmlFor='name' className='block mb-2 text-sm'>
+                                Name
+                            </label>
+                            <input
+                                type='name'
+                                name='name'
+                                id='name'
+                                required
+                                placeholder='Enter Your Name Here'
+                                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-orange-500 bg-gray-200 text-gray-900'
+                                data-temp-mail-org='0'
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor='photo' className='block mb-2 text-sm'>
+                            Photo URL
+                            </label>
+                            <input
+                                type='photo'
+                                name='photo'
+                                id='photo'
+                                required
+                                placeholder='Enter Your PhotoURL Here'
+                                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-orange-500 bg-gray-200 text-gray-900'
+                                data-temp-mail-org='0'
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor='email' className='block mb-2 text-sm'>
+                                Email address
+                            </label>
+                            <input
+                                type='email'
+                                name='email'
+                                id='email'
+                                required
+                                placeholder='Enter Your Email Here'
+                                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-orange-500 bg-gray-200 text-gray-900'
+                                data-temp-mail-org='0'
+                            />
+                        </div>
+                        <div className="relative">
+                            <div className='flex justify-between'>
+                                <label htmlFor='password' className='text-sm mb-2'>
+                                    Password
+                                </label>
+                            </div>
+                            <input
+                               name="password" type={showPassword ? "text" : "password"}
+                                id='password'
+                                required
+                                placeholder='*******'
+                                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-orange-500 bg-gray-200 text-gray-900'
+                            />
+                            <span className="absolute top-10 right-2" onClick={() => setShowPassword(!showPassword)}>
+                                {
+                                    showPassword ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>
+                                }
+                            </span>
+                        </div>
                         {
-                            showPassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
+                            error && <small className="text-red-600 mt-2">{error}</small>
                         }
-                    </span>
-                </div>
-                <div className="form-control mt-1">
-                    <label className="label">
-                        <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                    </label>
-                    {
-                        error && <small className="text-red-600 mt-2">{error}</small>
-                    }
-                </div>
-                <div className="form-control mt-3">
-                    <button name="submit" className="btn  bg-orange-600">Register</button>
-                </div>
-                <p className="text-center mt-4">Do Not Have An Account ? <Link className="text-blue-600 font-bold" to='/login'>Login</Link></p>
+                    </div>
 
-            </form>
+                    <div>
+                        <button
+                            type='submit'
+                            className='bg-orange-500 w-full rounded-md py-3 text-white'
+                        >
+                           Register
+                        </button>
+                    </div>
+                </form>
+
+                <div className='flex items-center pt-4 space-x-1'>
+                    <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
+                    <p className='px-3 text-sm dark:text-gray-400'>
+                        Login with social accounts
+                    </p>
+                    <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
+                </div>
+                <div
+                    onClick={handleGoogleLogin}
+                    className='disabled:cursor-not-allowed flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded rounded-md cursor-pointer'>
+                    <FcGoogle size={32} />
+                    <p>Continue with Google</p>
+                </div>
+                <div
+                    onClick={handleGithubLogin}
+                    className='disabled:cursor-not-allowed flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer rounded-md'>
+                    <FaGithub size={32} />
+                    <p>Continue with Github</p>
+                </div>
+                <p className='px-6 text-sm text-center text-gray-400'>
+                Already have an account?{' '}
+                    <Link
+                        to='/login'
+                        className='hover:underline hover:text-orange-500 text-gray-600'
+                    >
+                        Login
+                    </Link>
+                    .
+                </p>
+            </div>
         </div>
     );
 };

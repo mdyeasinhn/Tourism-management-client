@@ -8,6 +8,7 @@ import AddTouristsSports from "../Pages/AddTouristsSports";
 import Update from "../Pages/Update";
 import MySpot from "../Pages/MySpot";
 import PrivateRoute from "./PrivateRoute";
+import AllTourSpots from "../Pages/AllTourSpots";
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
         {
             path: '/register',
             element: <Register></Register>
+        },
+        {
+          path: '/all-spots',
+          element:<AllTourSpots/> 
         },
        
         {

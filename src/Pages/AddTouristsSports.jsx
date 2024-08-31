@@ -21,7 +21,7 @@ const AddTouristsSports = () => {
         const newPlace = {name, location, details, price, image, country, seasonality, travel, visitor, email}
         console.log(newPlace);
         // send data to the server
-        fetch('https://tourism-management-server-dun.vercel.app/addTour',{
+        fetch('http://localhost:5000/addTour',{
             method: "POST",
             headers:{
                 'content-type' : 'application/json'

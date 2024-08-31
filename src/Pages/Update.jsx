@@ -9,7 +9,7 @@ const Update = () => {
 
 
     useEffect(() => {
-        fetch(`https://tourism-management-server-dun.vercel.app/singleSpot/${id}`)
+        fetch(`http://localhost:5000/singleSpot/${id}`)
             .then(res => res.json())
             .then(data => {
                 setSpot(data);
@@ -31,7 +31,7 @@ const Update = () => {
 
         const info = {name, location, details, price, image, country, seasonality, travel, visitor}
         // console.log(info);
-        fetch(`https://tourism-management-server-dun.vercel.app/update/${id}`,{
+        fetch(`http://localhost:5000/update/${id}`,{
             method: "PUT",
             headers: {
                 "content-type": "application/json"
