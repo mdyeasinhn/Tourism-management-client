@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 const Register = () => {
     const navigate = useNavigate();
-    const { createUser, updateUserProfile } = useContext(AuthContext);
+    const { createUser, updateUserProfile, googleLogin, githubLogin } = useContext(AuthContext);
     const [error, setError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
@@ -45,7 +45,9 @@ const Register = () => {
             Swal.fire({
                 title: "Registration Successful",
                 text: "You have successfully registered!",
-                icon: "success"
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
             });
         } catch (error) {
             Swal.fire({
@@ -60,10 +62,14 @@ const Register = () => {
     const handleGoogleLogin = async () => {
         try {
             await googleLogin();
+            navigate('/')
             Swal.fire({
                 title: "Login Successful",
                 text: "You have successfully logged in!",
-                icon: "success"
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
+
             });
         } catch (error) {
             Swal.fire({
@@ -81,7 +87,9 @@ const Register = () => {
             Swal.fire({
                 title: "Login Successful",
                 text: "You have successfully logged in!",
-                icon: "success"
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
             });
         } catch (error) {
             navigate('/')

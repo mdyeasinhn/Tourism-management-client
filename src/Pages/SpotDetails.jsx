@@ -5,7 +5,7 @@ const SpotDetails = () => {
     const spot = useLoaderData();
 
     return (
-        <div className="flex items-center gap-8 mt-10 border bg-gray-200 rounded-md">
+        <div className="flex items-center gap-8 mt-10 borderrounded-md">
             <div>
                 <img
                     src={spot.image}

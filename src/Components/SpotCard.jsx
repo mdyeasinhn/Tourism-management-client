@@ -12,7 +12,7 @@ const SpotCard = ({ spot }) => {
                         src={spot.image}
                         alt="Shoes" />
                 </figure>
-                <div className="card-body">
+                <div className="card-body bg-gray-200 rounded-b-xl">
                     <h2 className="card-title">{spot.name}</h2>
                     <p>{spot.details}</p>
                     <p>Cost : $ {spot.price}</p>

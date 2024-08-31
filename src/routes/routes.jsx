@@ -36,7 +36,7 @@ const router = createBrowserRouter([
         {
           path: '/spot/:id',
           element : <SpotDetails/>,
-          loader: ({ params }) => fetch(`http://localhost:5000/singleSpot/${params.id}`)
+          loader: ({ params }) => fetch(`https://tourism-management-server-dun.vercel.app/singleSpot/${params.id}`)
       },
        
         {

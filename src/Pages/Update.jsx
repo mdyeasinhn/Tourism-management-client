@@ -10,7 +10,7 @@ const Update = () => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/singleSpot/${id}`)
+        fetch(`https://tourism-management-server-dun.vercel.app/singleSpot/${id}`)
             .then(res => res.json())
             .then(data => {
                 setSpot(data);
@@ -30,9 +30,9 @@ const Update = () => {
         const travel = form.travel.value;
         const visitor = form.visitor.value;
 
-        const info = {name, location, details, price, image, country, seasonality, travel, visitor}
+        const info = { name, location, details, price, image, country, seasonality, travel, visitor }
         // console.log(info);
-        fetch(`http://localhost:5000/update/${id}`,{
+        fetch(`https://tourism-management-server-dun.vercel.app/update/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json"
@@ -40,33 +40,34 @@ const Update = () => {
             body: JSON.stringify(info)
 
         })
-        .then(res => res.json())
-        .then(data=>{
-            console.log(data);
-            if(data.modifiedCount>0){
-                navigate('/mySpot')
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Spot Updated Successfully',
-                    icon: 'success',
-                    confirmButtonText: 'Done'
-                  })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.modifiedCount > 0) {
+                    navigate('/mySpot')
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Spot Updated Successfully',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
             }
-        })
+            )
 
     }
     return (
-        <div>
-            <h1 className="text-5xl fonst-bold text-center mb-2 mt-2">Update Tourists Spot</h1>
-            <form onSubmit={handleUpdate}>
+        <div className=' flex justify-center'>
+            <form className='bg-gray-100 p-10 rounded-md mt-5' onSubmit={handleUpdate}>
                 {/* name and location */}
-                <div className="md:flex mb-4 gap-3" >
+                <div className="md:flex mb-4 gap-3 " >
                     <div className="form-control md:w-1/2">
                         <label className="label">
                             <span className="label-text"> Name</span>
                         </label>
-                        <label className="input-group">
-                            <input type="text" name="name" placeholder="Name" className="input input-bordered w-full" defaultValue={spot.name} />
+                        <label className="input-group ">
+                            <input required defaultValue={spot.name} type="text" name="name" placeholder="Name" className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-orange-500  text-gray-900' />
                         </label>
                     </div>
 
@@ -75,7 +76,7 @@ const Update = () => {
                             <span className="label-text">Location</span>
                         </label>
                         <label className="input-group">
-                            <input type="text" name="location" placeholder="Location" className="input input-bordered w-full"  defaultValue={spot.location}/>
+                            <input required defaultValue={spot.location} type="text" name="location" placeholder="Location" className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-orange-500  text-gray-900" />
                         </label>
                     </div>
                 </div>
@@ -86,7 +87,7 @@ const Update = () => {
                             <span className="label-text">Country Name</span>
                         </label>
                         <label className="input-group">
-                            <input type="text" name="country" placeholder="Country" className="input input-bordered w-full" defaultValue={spot.country}/>
+                            <input required defaultValue={spot.country} type="text" name="country" placeholder="Country" className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-orange-500  text-gray-900" />
                         </label>
                     </div>
 
@@ -95,27 +96,30 @@ const Update = () => {
                             <span className="label-text">Seasonality</span>
                         </label>
                         <label className="input-group">
-                            <input type="text" name="seasonality" placeholder="Seasonality" className="input input-bordered w-full" defaultValue={spot.seasonality} />
+                            <input required type="text" defaultValue={spot.seasonality} name="seasonality" placeholder="Seasonality" className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-orange-500  text-gray-900" />
                         </label>
                     </div>
                 </div>
                 {/* imag and price */}
                 <div className="md:flex mb-4 gap-3">
-                    <div className="form-control md:w-1/2">
+
+
+                    <div className="form-control w-full md:w-1/2">
                         <label className="label">
-                            <span className="label-text">short description</span>
+                            <span className="label-text">Photo URL</span>
                         </label>
                         <label className="input-group">
-                            <input type="text" name="details" placeholder="Description" className="input input-bordered w-full" defaultValue={spot.image} />
+                            <input required type="text" defaultValue={spot.image} name="photo" placeholder="Photo URL" className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-orange-500  text-gray-900" />
                         </label>
                     </div>
+
 
                     <div className="form-control md:w-1/2">
                         <label className="label">
                             <span className="label-text">Price</span>
                         </label>
                         <label className="input-group">
-                            <input type="text" name="price" placeholder="Price" className="input input-bordered w-full" defaultValue={spot.price} />
+                            <input required defaultValue={spot.price} type="text" name="price" placeholder="Price" className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-orange-500  text-gray-900" />
                         </label>
                     </div>
                 </div>
@@ -126,7 +130,7 @@ const Update = () => {
                             <span className="label-text">Travel Time</span>
                         </label>
                         <label className="input-group">
-                            <input type="text" name="travel" placeholder="Travel Time" className="input input-bordered w-full" defaultValue={spot.travel} />
+                            <input required defaultValue={spot.travel} type="text" name="travel" placeholder="Travel Time" className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-orange-500  text-gray-900" />
                         </label>
                     </div>
 
@@ -135,22 +139,20 @@ const Update = () => {
                             <span className="label-text">Visitor Per Year</span>
                         </label>
                         <label className="input-group">
-                            <input type="text" name="visitor" placeholder="Visitro Per Year" className="input input-bordered w-full" defaultValue={spot.visitor} />
+                            <input required type="text" defaultValue={spot.visitor} name="visitor" placeholder="Visitro Per Year" className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-orange-500  text-gray-900" />
                         </label>
                     </div>
                 </div>
                 {/* photo and submit */}
-                <div className="mb-4">
-                    <div className="form-control w-full">
-                        <label className="label">
-                            <span className="label-text">Photo URL</span>
-                        </label>
-                        <label className="input-group">
-                            <input type="text" name="photo" placeholder="Photo URL" className="input input-bordered w-full" defaultValue={spot.image} />
-                        </label>
-                    </div>
+                <div className="form-control mb-10">
+                    <label className="label">
+                        <span className="label-text">short description</span>
+                    </label>
+                    <label className="input-group">
+                        <input required type="text" defaultValue={spot.details} name="details" placeholder="Description" className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-orange-500  text-gray-900" />
+                    </label>
                 </div>
-                <input type="submit" value="Update Spot" className="btn btn-block bg-orange-500" />
+                <input type="submit" value="Update & Continue" className="bg-orange-500 w-full rounded-md py-3 text-white" />
             </form>
         </div>
     );

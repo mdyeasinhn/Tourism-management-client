@@ -26,7 +26,9 @@ const Login = () => {
             Swal.fire({
                 title: "Login Successful",
                 text: "You have successfully logged in!",
-                icon: "success"
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
             });
         } catch (error) {
             console.log(error);
@@ -47,7 +49,9 @@ const Login = () => {
             Swal.fire({
                 title: "Login Successful",
                 text: "You have successfully logged in!",
-                icon: "success"
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
             });
         } catch (error) {
             Swal.fire({
@@ -66,7 +70,9 @@ const Login = () => {
             Swal.fire({
                 title: "Login Successful",
                 text: "You have successfully logged in!",
-                icon: "success"
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
             });
         } catch (error) {
             navigate('/')
@@ -79,7 +85,7 @@ const Login = () => {
     }
     return (
         <div className='flex justify-center items-center min-h-screen'>
-            <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
+            <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900 m-15 '>
                 <div className='mb-8 text-center'>
                     <h1 className='my-3 text-4xl font-bold'>Login</h1>
                     <p className='text-sm text-gray-400'>
