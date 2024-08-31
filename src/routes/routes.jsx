@@ -9,6 +9,7 @@ import Update from "../Pages/Update";
 import MySpot from "../Pages/MySpot";
 import PrivateRoute from "./PrivateRoute";
 import AllTourSpots from "../Pages/AllTourSpots";
+import SpotDetails from "../Pages/SpotDetails";
 
 const router = createBrowserRouter([
     {
@@ -32,6 +33,11 @@ const router = createBrowserRouter([
           path: '/all-spots',
           element:<AllTourSpots/> 
         },
+        {
+          path: '/spot/:id',
+          element : <SpotDetails/>,
+          loader: ({ params }) => fetch(`http://localhost:5000/singleSpot/${params.id}`)
+      },
        
         {
           path: '/addTour',

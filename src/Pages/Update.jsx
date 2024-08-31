@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Update = () => {
+    const navigate = useNavigate();
     const { id } = useParams()
     console.log(id);
     const [spot, setSpot] = useState({});
@@ -43,6 +44,7 @@ const Update = () => {
         .then(data=>{
             console.log(data);
             if(data.modifiedCount>0){
+                navigate('/mySpot')
                 Swal.fire({
                     title: 'Success!',
                     text: 'Spot Updated Successfully',

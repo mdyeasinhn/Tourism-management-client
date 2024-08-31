@@ -14,7 +14,7 @@ const AllTourSpots = () => {
     return (
         <div>
             <div className="text-center mt-4">
-                <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl">AllTourists Spot</h1>
+                <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl">All  Spot</h1>
             </div>
             <div className='grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3 '>
                 {
