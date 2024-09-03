@@ -14,7 +14,18 @@ const Nav = () => {
         document.querySelector('html').setAttribute('data-theme', localTheme || theme)
     }, [theme]);
 
+    const handleToggle = e => {
+        console.log(e.target.checked)
+        if (e.target.checked) {
+            setTheme('dark')
+            localStorage.setItem('theme', 'dark');
 
+        } else {
+            setTheme('light')
+            localStorage.setItem('theme', 'light');
+        }
+
+    }
 
 
     const navlinks = <>
@@ -42,6 +53,11 @@ const Nav = () => {
 
                             <Link to='/all-spots' className='block rounded-xl   px-4 py-2 hover:bg-neutral-100 transition font-semibold' >      All Spots
                             </Link>
+                            <div onClick={handleToggle} className="form-control">
+                                <label className="label cursor-pointer">
+                                    <input type="checkbox" className="toggle" defaultChecked />
+                                </label>
+                            </div>
                             {/* Dropdown btn */}
                             <div
                                 onClick={() => setIsOpen(!isOpen)}
@@ -68,7 +84,7 @@ const Nav = () => {
 
                                     {user ? (
                                         <>
-                                          <Link
+                                            <Link
                                                 to='/mySpot'
                                                 className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
                                             >
@@ -80,7 +96,7 @@ const Nav = () => {
                                             >
                                                 Add Spot
                                             </Link>
-                                          
+
                                             <div
                                                 onClick={logOut}
                                                 className='px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer'

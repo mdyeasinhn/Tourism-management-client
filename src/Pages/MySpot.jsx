@@ -6,18 +6,18 @@ import axios from "axios";
 
 const MySpot = () => {
     const { user } = useContext(AuthContext);
-    const [item, setItem] = useState([]);
+    const [items, setItems] = useState([]);
     const [control, setControl] = useState(false);
     console.log(control);
 
     useEffect(() => {
         axios.get(`https://tourism-management-server-dun.vercel.app/mySpot/${user?.email}`)
             .then(response => {
-                setItem(response.data);
+                setItems(response.data);
             })
-          
-    }, [user, control]);
 
+    }, [user, control]);
+    console.log(items);
     const handleDelete = async (id) => {
         const result = await Swal.fire({
             title: "Are you sure?",
@@ -52,50 +52,117 @@ const MySpot = () => {
         }
     };
     return (
-        <div className='grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3 '>
-            {
-                item?.map(spot => (
-                    <div key={spot._id}  >
+        <div className='container mx-auto px-4 sm:px-8'>
+            <div className='py-8'>
+                <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
+                    <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
+                        <table className='min-w-full leading-normal'>
+                            <thead>
+                                <tr>
+                                    <th
+                                        scope='col'
+                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                                    >
+                                        Image
+                                    </th>
+                                    <th
+                                        scope='col'
+                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                                    >
+                                    Location
+                                    </th>
+                                    <th
+                                        scope='col'
+                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                                    >
+                                       Name
+                                    </th>
+                                    <th
+                                        scope='col'
+                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                                    >
+                                        Country
+                                    </th>
+                                    <th
+                                        scope='col'
+                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                                    >
+                                        Cost
+                                    </th>
+                                    <th
+                                        scope='col'
+                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                                    >
+                                         Update
+                                       
+                                    </th>
+                                    <th
+                                        scope='col'
+                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                                    >
+                                        Delete
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {/* my list data */}
+                                {items.map(item => (
+                                    <tr key={item._id}>
+                                        <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+                                            <div className='flex items-center'>
+                                                <div className='flex-shrink-0'>
+                                                    <div className='block relative'>
+                                                        <img
 
+                                                            alt='profile'
+                                                            src={item?.image}
+                                                            className='mx-auto object-cover rounded h-10 w-15'
+                                                        />
+                                                    </div>
+                                                </div>
 
-                        <div className="card bg-base-100 w-96 shadow-xl">
-                            <figure>
-                                <img
-                                    className='h-[400px]'
-                                    src={spot.image}
-                                    alt="Shoes" />
-                            </figure>
-                            <div className="card-body  bg-gray-200 rounded-b-xl">
-                                <h2 className="card-title">{spot.name}</h2>
-                                <p>{spot.details}</p>
-                                <div className="card-actions justify-between ">
-                                    <p>Cost : $ {spot.price}</p>
-                                    <p>country :  {spot.country}</p>
-                                </div>
-                                <div className="card-actions justify-between mt-4">
-                                    <Link to={`/update/${spot._id}`}> <button className="btn bg-orange-500 btn-sm">Update</button></Link>
-                                 
-                                        <button onClick={() => handleDelete(spot._id)} className="btn btn-sm bg-red-600">Delete</button>
-                                  
+                                            </div>
+                                        </td>
+                                        <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+                                            <p className='text-gray-900 whitespace-no-wrap'>{item?.location}</p>
+                                        </td>
+                                        <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+                                            <p className='text-gray-900 whitespace-no-wrap'>{item?.name}</p>
+                                        </td>
+                                        <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+                                            <p className='text-gray-900 whitespace-no-wrap'>{item.country}</p>
+                                        </td>
+                                        <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+                                            <p className='text-gray-900 whitespace-no-wrap'>$ {item?.price}</p>
+                                        </td>
 
-                                </div>
-                            </div>
-                        </div>
+                                     
+                                        <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+                                            <span className='relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight'>
+                                                <span
+                                                    aria-hidden='true'
+                                                    className='absolute inset-0 bg-green-200 opacity-50 rounded-full'
+                                                ></span>
+                                                <Link to={`/update/${item._id}`}  className='relative'>Update</Link>
+                                            </span>
+                                        </td>
+                                        <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+                                            <span className='relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight'>
+                                                <span
+                                                    aria-hidden='true'
+                                                    className='absolute inset-0 bg-red-600 opacity-50 rounded-full'
+                                                ></span>
+                                                <span onClick={() => handleDelete(item._id)} className='relative'>Delete</span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ))}
 
-
-
-
-
-
-
-
-
-
-
-
+                            </tbody>
+                        </table>
                     </div>
-                ))
-            }
+                </div>
+            </div>
         </div>
     );
 };
@@ -104,17 +171,3 @@ export default MySpot;
 
 
 
-// fetch(`https://tourism-management-server-dun.vercel.app/delete/${id}`, {
-//     method: 'DELETE'
-// })
-//     .then(res => res.json())
-//     .then(data => {
-//         if (data.deletedCount > 0){
-//             setControl(!control)
-//             Swal.fire({
-//                 title: "Deleted!",
-//                 text: "Your spot has been deleted.",
-//                 icon: "success"
-//             });
-//         }
-// })

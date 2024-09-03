@@ -166,7 +166,7 @@ const Register = () => {
                                name="password" type={showPassword ? "text" : "password"}
                                 id='password'
                                 required
-                                placeholder='*******'
+                                placeholder='Enter Your Password'
                                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-orange-500 bg-gray-200 text-gray-900'
                             />
                             <span className="absolute top-10 right-2" onClick={() => setShowPassword(!showPassword)}>

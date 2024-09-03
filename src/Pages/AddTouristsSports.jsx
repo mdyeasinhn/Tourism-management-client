@@ -141,10 +141,10 @@ const AddTouristsSports = () => {
                 {/* photo and submit */}
                 <div className="form-control mb-10">
                     <label className="label">
-                        <span className="label-text">short description</span>
+                        <span className="label-text">Short description</span>
                     </label>
                     <label className="input-group">
-                        <input required type="text" name="details" placeholder="Description" className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-orange-500  text-gray-900" />
+                        <textarea required type="text" name="details" placeholder="Description" className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-orange-500  text-gray-900" ></textarea>
                     </label>
                 </div>
                 <input type="submit" value="Save & Continue" className="bg-orange-500 w-full rounded-md py-3 text-white" />

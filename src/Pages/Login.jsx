@@ -71,8 +71,7 @@ const Login = () => {
                 title: "Login Successful",
                 text: "You have successfully logged in!",
                 icon: "success",
-                showConfirmButton: false,
-                timer: 1500
+                ConfirmButton: false,
             });
         } catch (error) {
             navigate('/')
@@ -84,7 +83,7 @@ const Login = () => {
         }
     }
     return (
-        <div className='flex justify-center items-center min-h-screen'>
+        <div className='flex justify-center items-center min-h-screen '>
             <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900 m-15 '>
                 <div className='mb-8 text-center'>
                     <h1 className='my-3 text-4xl font-bold'>Login</h1>
@@ -94,7 +93,7 @@ const Login = () => {
                 </div>
                 <form
                     onSubmit={handleLogin}
-                    className='space-y-6 ng-untouched ng-pristine ng-valid'
+                    className='space-y-6 ng-untouched ng-pristine ng-valid '
                 >
                     <div className='space-y-4'>
                         <div>
@@ -123,7 +122,7 @@ const Login = () => {
                                 autoComplete='current-password'
                                 id='password'
                                 required
-                                placeholder='*******'
+                                placeholder='Enter Your Password'
                                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-orange-500 bg-gray-200 text-gray-900'
                             />
                         </div>
