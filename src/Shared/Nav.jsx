@@ -1,31 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext,  useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProviders";
 import avatarImg from '../assets/placeholder.jpg'
-import { AiOutlineMenu } from 'react-icons/ai'
 const Nav = () => {
     const [isOpen, setIsOpen] = useState(false)
     const { user, logOut } = useContext(AuthContext);
-    const [theme, setTheme] = useState('light');
 
-    useEffect(() => {
-        const localTheme = localStorage.getItem('theme');
-        console.log(localTheme)
-        document.querySelector('html').setAttribute('data-theme', localTheme || theme)
-    }, [theme]);
 
-    const handleToggle = e => {
-        console.log(e.target.checked)
-        if (e.target.checked) {
-            setTheme('dark')
-            localStorage.setItem('theme', 'dark');
-
-        } else {
-            setTheme('light')
-            localStorage.setItem('theme', 'light');
-        }
-
-    }
 
 
     const navlinks = <>
@@ -53,17 +34,13 @@ const Nav = () => {
 
                             <Link to='/all-spots' className='block rounded-xl   px-4 py-2 hover:bg-neutral-100 transition font-semibold' >      All Spots
                             </Link>
-                            <div onClick={handleToggle} className="form-control">
-                                <label className="label cursor-pointer">
-                                    <input type="checkbox" className="toggle" defaultChecked />
-                                </label>
-                            </div>
+                         
                             {/* Dropdown btn */}
                             <div
                                 onClick={() => setIsOpen(!isOpen)}
                                 className='p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition'
                             >
-                                <AiOutlineMenu />
+                               
                                 <div className='hidden md:block'>
                                     {/* Avatar */}
                                     <img

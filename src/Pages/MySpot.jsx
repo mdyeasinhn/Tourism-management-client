@@ -61,44 +61,44 @@ const MySpot = () => {
                                 <tr>
                                     <th
                                         scope='col'
-                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                                        className='bg-gray-200 px-5 py-3   border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                                     >
                                         Image
                                     </th>
                                     <th
                                         scope='col'
-                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                                        className='px-5 py-3 bg-gray-200  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                                     >
                                     Location
                                     </th>
                                     <th
                                         scope='col'
-                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                                        className='px-5 py-3 bg-gray-200   border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                                     >
                                        Name
                                     </th>
                                     <th
                                         scope='col'
-                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                                        className='px-5 py-3 bg-gray-200  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                                     >
                                         Country
                                     </th>
                                     <th
                                         scope='col'
-                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                                        className='px-5 py-3 bg-gray-200   border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                                     >
                                         Cost
                                     </th>
                                     <th
                                         scope='col'
-                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                                        className='px-5 py-3 bg-gray-200  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                                     >
                                          Update
                                        
                                     </th>
                                     <th
                                         scope='col'
-                                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
+                                        className='px-5 py-3 bg-gray-200   border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                                     >
                                         Delete
                                     </th>
