@@ -50,6 +50,10 @@ const router = createBrowserRouter([
         {
           path: '/mySpot',
           element: <PrivateRoute><MySpot></MySpot></PrivateRoute>
+        },
+        {
+          path: '/mybookings',
+          element: <PrivateRoute><MySpot></MySpot></PrivateRoute>
         }
       ]
     },

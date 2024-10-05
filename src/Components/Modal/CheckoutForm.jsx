@@ -1,114 +1,95 @@
-
-
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import PropTypes from 'prop-types'
-import CheckoutForm from './CheckoutForm.css'
-import { useEffect, useState } from 'react';
-import useAuth from '../../hooks/useAuth';
-import toast from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-const CheckoutForm = ({ closeModal,   }) => {
-  const { user } = useAuth()
+import toast from 'react-hot-toast'
+import { AuthContext } from '../../Providers/AuthProviders';
+const CheckoutForm = ({ closeModal, spot }) => {
+  const { user } = useContext(AuthContext);
+  console.log(user);
   const stripe = useStripe();
   const elements = useElements();
   const [clientSecret, setClientSecret] = useState();
-  const [cardError, setCardError] = useState('')
+  const [cardError, setCardError] = useState('');
   const [processing, setProcessing] = useState(false);
-  const navigate = useNavigate();
-  useEffect(() => {
-    // Fetch client secret 
-    if (bookingInfo?.price && bookingInfo?.price > 1) {
-      getClientSecret({ price: bookingInfo.price })
-    }
-  }, [bookingInfo.price]);
 
-  // get client secret 
-  const getClientSecret = async price => {
-    const { data } = await axios.post('/create-payment-intent', price)
-    console.log("client secret for server", data);
-    setClientSecret(data.clientSecret)
-  }
+  console.log(clientSecret);
+  useEffect(() => {
+    if (spot?.price && spot.price > 1) {
+      getClientSecret({ price: spot.price });
+    }
+  }, [spot]);
+
+  const getClientSecret = async (price) => {
+    try {
+      const { data } = await axios.post('http://localhost:5000/create-payment-intent', price);
+      setClientSecret(data.clientSecret);
+    } catch (error) {
+      console.error("Error fetching client secret:", error);
+    }
+  };
 
   const handleSubmit = async (event) => {
-    // Block native form submission.
     event.preventDefault();
-    setProcessing(true)
-    if (!stripe || !elements) {
-      // Stripe.js has not loaded yet. Make sure to disable
-      // form submission until Stripe.js has loaded.
-      return;
-    }
+    setProcessing(true);
+    if (!stripe || !elements) return;
 
-    // Get a reference to a mounted CardElement. Elements knows how
-    // to find your CardElement because there can only ever be one of
-    // each type of element.
     const card = elements.getElement(CardElement);
+    if (card == null) return;
 
-    if (card == null) {
-      return;
-    }
-
-    // Use your card Element with other Stripe.js APIs
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
       card,
     });
 
     if (error) {
-      console.log('[error]', error);
+      console.error('[error]', error);
       setCardError(error.message);
-      setProcessing(false)
-      return
-    } else {
-      console.log('[PaymentMethod]', paymentMethod);
-      setCardError('')
+      setProcessing(false);
+      return;
     }
-    // confirm payment 
+
     const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: card,
         billing_details: {
           email: user?.email,
-          name: user?.displayName
-        }
-      }
-    })
+          name: user?.displayName,
+        },
+      },
+    });
+
+
     if (confirmError) {
-      console.log(confirmError);
+      console.error(confirmError);
       setCardError(confirmError.message);
-      setProcessing(false)
-      return
+      setProcessing(false);
+      return;
     }
 
     if (paymentIntent.status === 'succeeded') {
-      console.log(paymentIntent)
-      // 1. Create payment info object
       const paymentInfo = {
-        ...bookingInfo,
-        roomId: bookingInfo._id,
+        ...spot,
+        bookingId: spot._id,
         transactionId: paymentIntent.id,
-        date: new Date(),
-      }
-      delete paymentInfo._id
-      console.log(paymentInfo);
+      };
+      delete paymentInfo._id;
+
       try {
-        // save paymentinfo
-        await axiosSecure.post('/booking', paymentInfo);
+        await axios.post('http://localhost:5000/booking', paymentInfo);
+        console.log(paymentInfo);
+        // Update room status logic here (if needed)
 
-        // update room status
-        await axiosSecure.patch(`/room/status/${bookingInfo?._id}`, {status : true});
-
-        refetch()
-        closeModal()
-        toast.success('Room booked successfully')
-        navigate('/dashboard/my-bookings')
+        await axios.patch(`http://localhost:5000/spot/status/${spot?._id}`, {status : true});
+        closeModal();
+        toast.success('spot booked successfully')
+       
       } catch (error) {
-        
+        console.error("Error saving payment info:", error);
+        setCardError('Failed to save payment information. Please try again.');
       }
     }
-    setProcessing(false)
-
+    setProcessing(false);
   };
 
   return (
@@ -130,36 +111,33 @@ const CheckoutForm = ({ closeModal,   }) => {
             },
           }}
         />
+                <hr className='mt-8 ' />
 
         <div className='flex mt-2 justify-around'>
           <button
             disabled={!stripe || !clientSecret || processing}
             type='submit'
-            className='inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2'
-
+            className='inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-800 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2'
           >
-
+          {spot.price}  Pay
           </button>
           <button
-
             type='button'
             className='inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2'
             onClick={closeModal}
           >
             Cancel
           </button>
-
         </div>
       </form>
-      {
-        cardError && <p className='text-red-600 ml-20 mt-4'>{cardError}</p>
-      }
+      {cardError && <p className='text-red-600 ml-20 mt-4'>{cardError}</p>}
     </>
   );
 };
+
 CheckoutForm.propTypes = {
-  bookingInfo: PropTypes.object,
-  closeModal: PropTypes.func,
-  refetch: PropTypes.func,
-}
-export default CheckoutForm
+  spot: PropTypes.object.isRequired,
+  closeModal: PropTypes.func.isRequired,
+};
+
+export default CheckoutForm;
