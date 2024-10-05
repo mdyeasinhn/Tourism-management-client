@@ -10,6 +10,7 @@ import MySpot from "../Pages/MySpot";
 import PrivateRoute from "./PrivateRoute";
 import AllTourSpots from "../Pages/AllTourSpots";
 import SpotDetails from "../Pages/SpotDetails";
+import MyBookings from "../Pages/MyBookings";
 
 const router = createBrowserRouter([
     {
@@ -53,7 +54,7 @@ const router = createBrowserRouter([
         },
         {
           path: '/mybookings',
-          element: <PrivateRoute><MySpot></MySpot></PrivateRoute>
+          element: <PrivateRoute><MyBookings></MyBookings></PrivateRoute>
         }
       ]
     },

@@ -73,6 +73,12 @@ const Nav = () => {
                                             >
                                                 Add Spot
                                             </Link>
+                                            <Link
+                                                to='/mybookings'
+                                                className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
+                                            >
+                                               My Bookings
+                                            </Link>
 
                                             <div
                                                 onClick={logOut}

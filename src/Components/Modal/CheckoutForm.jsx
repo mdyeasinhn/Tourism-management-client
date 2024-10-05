@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast'
 import { AuthContext } from '../../Providers/AuthProviders';
+import { useNavigate } from 'react-router-dom';
 const CheckoutForm = ({ closeModal, spot }) => {
   const { user } = useContext(AuthContext);
   console.log(user);
@@ -12,7 +13,7 @@ const CheckoutForm = ({ closeModal, spot }) => {
   const [clientSecret, setClientSecret] = useState();
   const [cardError, setCardError] = useState('');
   const [processing, setProcessing] = useState(false);
-
+  const navigate = useNavigate()
   console.log(clientSecret);
   useEffect(() => {
     if (spot?.price && spot.price > 1) {
@@ -66,13 +67,18 @@ const CheckoutForm = ({ closeModal, spot }) => {
       setProcessing(false);
       return;
     }
-
+    const userInfo = {
+      email: user.email,
+      name: user.displayName
+    }
     if (paymentIntent.status === 'succeeded') {
       const paymentInfo = {
         ...spot,
+        userInfo,
         bookingId: spot._id,
         transactionId: paymentIntent.id,
       };
+
       delete paymentInfo._id;
 
       try {
@@ -80,10 +86,11 @@ const CheckoutForm = ({ closeModal, spot }) => {
         console.log(paymentInfo);
         // Update room status logic here (if needed)
 
-        await axios.patch(`http://localhost:5000/spot/status/${spot?._id}`, {status : true});
+        await axios.patch(`http://localhost:5000/spot/status/${spot?._id}`, { status: true });
         closeModal();
         toast.success('spot booked successfully')
-       
+
+        navigate('/mybookings')
       } catch (error) {
         console.error("Error saving payment info:", error);
         setCardError('Failed to save payment information. Please try again.');
@@ -111,7 +118,7 @@ const CheckoutForm = ({ closeModal, spot }) => {
             },
           }}
         />
-                <hr className='mt-8 ' />
+        <hr className='mt-8 ' />
 
         <div className='flex mt-2 justify-around'>
           <button
@@ -119,7 +126,7 @@ const CheckoutForm = ({ closeModal, spot }) => {
             type='submit'
             className='inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-800 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2'
           >
-          {spot.price}  Pay
+            {spot.price}  Pay
           </button>
           <button
             type='button'

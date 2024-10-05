@@ -35,7 +35,7 @@ const SpotDetails = () => {
                 <div className='flex justify-between mt-6 pr-10'>
                     <h2 className='mt-3 font-semibold'>Price : $ {spot.price}</h2>
                     <div>
-                        <button  onClick={() => setIsOpen(true)} className="btn bg-orange-400 btn-sm"> Purchase</button>
+                        <button  disabled={spot.booked} onClick={() => setIsOpen(true)} className="btn bg-orange-400 btn-sm"> Purchase</button>
                         <BookingModal spot={spot} isOpen={isOpen} closeModal={closeModal}/>
                     </div>
                 </div>
